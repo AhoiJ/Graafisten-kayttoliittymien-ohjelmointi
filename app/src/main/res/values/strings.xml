@@ -1,8 +1,18 @@
 <resources>
     <string name="app_name">Test</string>
+
+    <string name="Vk3_teht">Vk1Teht</string>
     <string name="Green_button">Vihreä</string>
     <string name="Red_button">Punainen</string>
 
-    <string name="Vk_teht1">Vk1Teht</string>
+    <string name="Vk5_teht">Vk5Teht</string>
+    <string name="btn_Time">Time</string>
+    <string name="btn_Alarm">Alarm</string>
+    <string name="btn_Snooze">Snooze</string>
+    <string name="btn_StopAlarm">Stop Alarm</string>
+    <string name="btn_Increase">+</string>
+    <string name="btn_2Increase">++</string>
+    <string name="btn_Decrease">-</string>
+    <string name="btn_2Decrease">--</string>
 
 </resources>

@@ -11,19 +11,20 @@ import android.view.View.OnClickListener;
 public class MainActivity extends AppCompatActivity {
 
     private Button mBtVkTeht1;
-
+    private Button mBtVkTeht5;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        mBtVkTeht1OnClickListener();
+        mBtVk3TehtOnClickListener();
 
+        mbtVk5TehtOnCLickListener();
 
     }
 
-    public void mBtVkTeht1OnClickListener() {
+    public void mBtVk3TehtOnClickListener() {
 
         mBtVkTeht1 = findViewById(R.id.btnVkT1);
         mBtVkTeht1.setOnClickListener(new OnClickListener() {
@@ -34,10 +35,25 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    public void mbtVk5TehtOnCLickListener(){
+        mBtVkTeht5 = findViewById(R.id.btnVkT5);
+        mBtVkTeht5.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                launchVkTeht5 ();
+            }
+        });
+
+    }
+
 
     private void launchVkTeht1() {
         Intent intent = new Intent(this, vk3ButtonHarjActivity.class);
         startActivity(intent);
     }
 
+    private void launchVkTeht5() {
+        Intent intent = new Intent(this, vk5AlarmHarjActivity.class);
+        startActivity(intent);
+    }
 }
