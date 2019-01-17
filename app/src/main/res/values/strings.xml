@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Test</string>
+    <string name="Green_button">Vihreä</string>
+    <string name="Red_button">Punainen</string>
+
+    <string name="Vk_teht1">Vk1Teht</string>
+
+</resources>
