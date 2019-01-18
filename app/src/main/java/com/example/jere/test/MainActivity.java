@@ -10,7 +10,8 @@ import android.view.View.OnClickListener;
 
 public class MainActivity extends AppCompatActivity {
 
-    private Button mBtVkTeht1;
+    private Button mBtVkTeht3;
+    private Button mBtVkTeht4;
     private Button mBtVkTeht5;
 
     @Override
@@ -19,18 +20,27 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         mBtVk3TehtOnClickListener();
-
+        mBtVk4TehtOnClickListener();
         mbtVk5TehtOnCLickListener();
 
     }
 
     public void mBtVk3TehtOnClickListener() {
-
-        mBtVkTeht1 = findViewById(R.id.btnVkT1);
-        mBtVkTeht1.setOnClickListener(new OnClickListener() {
+        mBtVkTeht3 = findViewById(R.id.btnVkT3);
+        mBtVkTeht3.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                launchVkTeht1();
+                launchVkTeht3();
+            }
+        });
+    }
+
+    public void mBtVk4TehtOnClickListener(){
+        mBtVkTeht4 = findViewById(R.id.btnVkT4);
+        mBtVkTeht4.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                launchVkTeht4();
             }
         });
     }
@@ -47,8 +57,13 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    private void launchVkTeht1() {
+    private void launchVkTeht3() {
         Intent intent = new Intent(this, vk3ButtonHarjActivity.class);
+        startActivity(intent);
+    }
+
+    private void launchVkTeht4(){
+        Intent intent = new Intent(this, vk4ButtonHarjActivity.class);
         startActivity(intent);
     }
 

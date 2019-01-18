@@ -9,6 +9,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -23,12 +24,20 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.jere.test.MainActivity" />
         </activity>
-        <activity android:name=".vk5AlarmHarjActivity"
+        <activity android:name=".vk4ButtonHarjActivity"
+            android:parentActivityName=".MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.jere.test.MainActivity"/>
+        </activity>
+        <activity
+            android:name=".vk5AlarmHarjActivity"
             android:parentActivityName=".MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.jere.test.MainActivity" />
         </activity>
+
     </application>
 
 </manifest>

@@ -1,9 +1,15 @@
 <resources>
     <string name="app_name">Test</string>
 
-    <string name="Vk3_teht">Vk1Teht</string>
+    <string name="Vk3_teht">Vk3Teht</string>
     <string name="Green_button">Vihreä</string>
     <string name="Red_button">Punainen</string>
+
+    <string name="Vk4_teht">Vk4Teht</string>
+    <string name="plus_10min">10+</string>
+    <string name="minus_10min">10-</string>
+    <string name="value_reset">Reset</string>
+    <string name="value_base">0</string>
 
     <string name="Vk5_teht">Vk5Teht</string>
     <string name="btn_Time">Time</string>
