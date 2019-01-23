@@ -10,6 +10,9 @@
     <string name="minus_10min">10-</string>
     <string name="value_reset">Reset</string>
     <string name="value_base">0</string>
+    <string name="time_hours">HH</string>
+    <string name="time_minutes">MM</string>
+    <string name="time_seconds">SS</string>
 
     <string name="Vk5_teht">Vk5Teht</string>
     <string name="btn_Time">Time</string>
