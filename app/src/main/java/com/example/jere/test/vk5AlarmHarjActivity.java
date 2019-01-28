@@ -196,7 +196,7 @@ public class vk5AlarmHarjActivity extends AppCompatActivity {
             minutes = minutes - 1;
             seconds = 60;
         }
-        if (minutes <= 0){
+        if (minutes < 0){
             hours = hours - 1;
             minutes = 59;
         }
