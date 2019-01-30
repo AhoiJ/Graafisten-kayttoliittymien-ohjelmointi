@@ -13,36 +13,69 @@ import android.widget.TextView;
 
 import org.w3c.dom.Text;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 
 public class vk5AlarmHarjActivity extends AppCompatActivity {
-
-    private Button mBtTime;
-    private Button mBtAlarm;
+// Buttons
+    private Button mBtTime; // sets time
+    private Button mBtAlarm; // sets alarm
     private Button mBtSnooze;
     private Button mBtStopAlarm;
     private Button mBtAdd; // add 1 to time
     private Button mBtAddFast; // add as long as button is pressed
     private Button mBtDecrease; // decrease 1 from time
     private Button mBtDecreaseFast; // decrease as long as button is pressed
-
+// Textviews
     private TextView mTxtHours;
     private TextView mTxtMinutes;
     private TextView mTxtSeconds;
-
+// ints
     private int hours, minutes, seconds = 0;
     private int REP_DELAY = 50;
     private int REP_DELAY_FAST = 15;
-    private Handler repeatUpdateHandler = new Handler();
+    int alarmHours;
+    int alarmMin;
+    int alarmSec;
 
+    // handler for thread
+    private Handler repeatUpdateHandler = new Handler();
+//Timer
+    Timer t = new Timer();
+// Booleans
     private boolean mAutoIncrement = false;
     private boolean mAutoDecrement = false;
+    boolean timeActive = false;
+    boolean alarmActive = false;
+    boolean snoozeActive = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_vk5alarm);
 
-     //   btnTimeSetOnClickListener();
+        btnTimeSetOnClickListener();
+        btnAlarmSetOnClickListener();
+
+        t.scheduleAtFixedRate(new TimerTask() {
+            @Override
+            public void run() {
+                if (!timeActive) {
+                    int x[];
+                    x = increment(hours, minutes, seconds);
+                    hours = x[0];
+                    minutes = x[1];
+                    seconds = x[2];
+                    if (alarmActive) {
+                        displayTime(alarmHours, alarmMin, alarmSec);
+                    }
+                    else
+                        displayTime(hours, minutes, seconds);
+                }
+
+            }
+        },0,1000);
 
         mBtAdd = findViewById(R.id.btnIncrease);
         mBtAdd.setOnLongClickListener(
@@ -131,13 +164,34 @@ public class vk5AlarmHarjActivity extends AppCompatActivity {
 
 
     }
-
+        // Changes what buttons are active and stops timer
     public void btnTimeSetOnClickListener(){
         mBtTime = findViewById(R.id.btnTime);
-
         mBtTime.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
+                btnTimeIsActive();
+                if(alarmActive)
+                    btnAlarmIsActive();
+                if (snoozeActive)
+                    btnSnoozeIsActive();
+            }
+        });
+    }
+
+    // Changes what buttons are active and sets alarm
+    public void btnAlarmSetOnClickListener(){
+        mBtAlarm = findViewById(R.id.btnAlarm);
+        mBtAlarm.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                btnAlarmIsActive();
+                if (timeActive)
+                    btnTimeIsActive();
+                if (snoozeActive)
+                    btnSnoozeIsActive();
+
+                    // to show alarm time
 
             }
         });
@@ -147,10 +201,36 @@ public class vk5AlarmHarjActivity extends AppCompatActivity {
     class RptUpdater implements Runnable {
         public void run() {
             if( mAutoIncrement ){
-                increment();
+                int[] x;
+               if (alarmActive) {
+                   x = increment(alarmHours,alarmMin,alarmSec);
+                   alarmHours = x[0];
+                    alarmMin = x[1];
+                    alarmSec = x[2];
+                   displayTime(alarmHours,alarmMin, alarmSec);
+               } else{
+                   x = increment(hours,minutes,seconds);
+                   hours = x[0];
+                   minutes = x[1];
+                   seconds = x[2];
+                   displayTime(hours,minutes, seconds);
+               }
                 repeatUpdateHandler.postDelayed( new RptUpdater(), REP_DELAY );
             } else if( mAutoDecrement ){
-                decrement();
+                int[] y;
+                if (alarmActive) {
+                    y = decrement(alarmHours,alarmMin,alarmSec);
+                    alarmHours = y[0];
+                    alarmMin = y[1];
+                    alarmSec = y[2];
+                    displayTime(alarmHours,alarmMin, alarmSec);
+                } else{
+                    y = decrement(hours,minutes,seconds);
+                    hours = y[0];
+                    minutes = y[1];
+                    seconds = y[2];
+                    displayTime(hours,minutes, seconds);
+                }
                 repeatUpdateHandler.postDelayed( new RptUpdater(), REP_DELAY );
             }
         }
@@ -158,57 +238,131 @@ public class vk5AlarmHarjActivity extends AppCompatActivity {
     class RptUpdaterFast implements Runnable {
         public void run() {
             if( mAutoIncrement ){
-                increment();
+                int[] x;
+               if (alarmActive) {
+                   x = increment(alarmHours, alarmMin, alarmSec);
+                   alarmHours = x[0];
+                   alarmMin = x[1];
+                   alarmSec = x[2];
+                   displayTime(alarmHours,alarmMin, alarmSec);
+               }
+               else {
+                   x = increment(hours,minutes,seconds);
+                   hours = x[0];
+                   minutes = x[1];
+                   seconds = x[2];
+                   displayTime(hours,minutes, seconds);
+               }
                 repeatUpdateHandler.postDelayed( new RptUpdaterFast(), REP_DELAY_FAST );
             } else if( mAutoDecrement ){
-                decrement();
+                int[] y;
+                if (alarmActive) {
+                    y = decrement(alarmHours, alarmMin, alarmSec);
+                    alarmHours = y[0];
+                    alarmMin = y[1];
+                    alarmSec = y[2];
+                    displayTime(alarmHours,alarmMin,alarmSec);
+                }
+                else{
+                    y = decrement(hours,minutes,seconds);
+                    hours = y[0];
+                    minutes = y[1];
+                    seconds = y[2];
+                    displayTime(hours,minutes, seconds);
+                }
                 repeatUpdateHandler.postDelayed( new RptUpdaterFast(), REP_DELAY_FAST );
             }
         }
     }
 
-    public void increment(){
 
-        seconds = seconds + 1;
-        if (seconds >= 60) {
-            minutes = minutes + 1;
-            seconds = 0;
+
+
+
+    public int[] increment(int h,int m, int s){
+
+        s = s + 1;
+        if (s >= 60) {
+            m = m + 1;
+            s = 0;
         }
-        if (minutes >= 60){
-            hours = hours + 1;
-            minutes = 0;
+        if (m >= 60){
+            h = h + 1;
+            m = 0;
         }
-        if (hours >= 24){
-            hours = 0;
+        if (h >= 24){
+            h = 0;
         }
-        mTxtSeconds = findViewById(R.id.txtSeconds);
-        mTxtSeconds.setText("" + seconds);
-        mTxtMinutes = findViewById(R.id.txtMinutes);
-        mTxtMinutes.setText("" + minutes);
-        mTxtHours = findViewById(R.id.txtHours);
-        mTxtHours.setText("" + hours);
+
+        int[] time;
+        time = new int [3];
+        time[0] = h;
+        time[1] = m;
+        time[2] = s;
+        return (time);
     }
 
-    public void decrement(){
+    public int[] decrement(int h, int m, int s){
 
-        seconds = seconds - 1;
-        if (seconds <= 0) {
-            minutes = minutes - 1;
-            seconds = 60;
+        s = s - 1;
+        if (s <= 0) {
+            m = m - 1;
+            s = 60;
         }
-        if (minutes < 0){
-            hours = hours - 1;
-            minutes = 59;
+        if (m < 0){
+            h = h - 1;
+            m = 59;
         }
-        if (hours < 0){
-            hours = 23;
+        if (h < 0){
+            h = 23;
         }
+
+        int[] time;
+        time = new int [3];
+        time[0] = h;
+        time[1] = m;
+        time[2] = s;
+
+        return (time);
+    }
+    public void displayTime (int h, int m, int s){
+
         mTxtSeconds = findViewById(R.id.txtSeconds);
-        mTxtSeconds.setText("" + seconds);
+        mTxtSeconds.setText("" + s);
         mTxtMinutes = findViewById(R.id.txtMinutes);
-        mTxtMinutes.setText("" + minutes);
+        mTxtMinutes.setText("" + m);
         mTxtHours = findViewById(R.id.txtHours);
-        mTxtHours.setText("" + hours);
+        mTxtHours.setText("" + h);
     }
 
+    public void btnTimeIsActive(){
+        if (timeActive == true) {
+            timeActive = false;
+            mBtTime.setBackgroundResource(R.drawable.btn_time_inactive);
+        }
+        else {
+            timeActive = true;
+            mBtTime.setBackgroundResource(R.drawable.btn_time_active);
+        }
+    }
+    public void btnAlarmIsActive(){
+        if (alarmActive){
+            alarmActive = false;
+            mBtAlarm.setBackgroundResource(R.drawable.btn_alarm_inactive);
+        }
+        else {
+            alarmActive = true;
+            mBtAlarm.setBackgroundResource(R.drawable.btn_alarm_active);
+        }
+    }
+    public void btnSnoozeIsActive(){
+        if (snoozeActive){
+            snoozeActive = false;
+            mBtSnooze.setBackgroundResource(R.drawable.btn_alarm_inactive);
+        }
+        else {
+            snoozeActive = true;
+            mBtSnooze.setBackgroundResource(R.drawable.btn_snooze_active);
+        }
+    }
 }

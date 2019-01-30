@@ -1,11 +1,11 @@
 <resources>
     <string name="app_name">Test</string>
 
-    <string name="Vk3_teht">Vk3Teht</string>
+    <string name="Vk3_teht">T1</string>
     <string name="Green_button">Vihreä</string>
     <string name="Red_button">Punainen</string>
 
-    <string name="Vk4_teht">Vk4Teht</string>
+    <string name="Vk4_teht">T2</string>
     <string name="plus_10min">10+</string>
     <string name="minus_10min">10-</string>
     <string name="value_reset">Reset</string>
@@ -14,7 +14,7 @@
     <string name="time_minutes">MM</string>
     <string name="time_seconds">SS</string>
 
-    <string name="Vk5_teht">Vk5Teht</string>
+    <string name="Vk5_teht">T3</string>
     <string name="btn_Time">Time</string>
     <string name="btn_Alarm">Alarm</string>
     <string name="btn_Snooze">Snooze</string>
