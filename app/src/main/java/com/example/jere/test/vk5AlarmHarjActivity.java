@@ -1,6 +1,9 @@
 package com.example.jere.test;
 
 import android.content.SharedPreferences;
+import android.media.Ringtone;
+import android.media.RingtoneManager;
+import android.net.Uri;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -18,46 +21,54 @@ import java.util.TimerTask;
 
 
 public class vk5AlarmHarjActivity extends AppCompatActivity {
-// Buttons
+    // Buttons
     private Button mBtTime; // sets time
     private Button mBtAlarm; // sets alarm
     private Button mBtSnooze;
-    private Button mBtStopAlarm;
+    private Button mBtStopAlarm; // stops alarm
     private Button mBtAdd; // add 1 to time
     private Button mBtAddFast; // add as long as button is pressed
     private Button mBtDecrease; // decrease 1 from time
     private Button mBtDecreaseFast; // decrease as long as button is pressed
-// Textviews
+    // Textviews
     private TextView mTxtHours;
     private TextView mTxtMinutes;
     private TextView mTxtSeconds;
-// ints
+    // ints
     private int hours, minutes, seconds = 0;
     private int REP_DELAY = 50;
     private int REP_DELAY_FAST = 15;
-    int alarmHours;
-    int alarmMin;
-    int alarmSec;
+    private int ALARM_DELAY = 1500;
+    int alarmHours = 23;
+    int alarmMin = 59;
+    int alarmSec = 59;
 
     // handler for thread
     private Handler repeatUpdateHandler = new Handler();
-//Timer
+    //Timer
     Timer t = new Timer();
-// Booleans
+
+    // Booleans
     private boolean mAutoIncrement = false;
     private boolean mAutoDecrement = false;
     boolean timeActive = false;
     boolean alarmActive = false;
     boolean snoozeActive = false;
+    boolean soundAlarm = false;
+
+    // alarm sound stuff
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_vk5alarm);
 
+        // functions where program checks if button has been pressed
         btnTimeSetOnClickListener();
         btnAlarmSetOnClickListener();
 
+        // timer function for the clock,
+        // Also does the "real-time checks"
         t.scheduleAtFixedRate(new TimerTask() {
             @Override
             public void run() {
@@ -67,111 +78,145 @@ public class vk5AlarmHarjActivity extends AppCompatActivity {
                     hours = x[0];
                     minutes = x[1];
                     seconds = x[2];
+                    // shows alarm time if alarm button is "active"
                     if (alarmActive) {
                         displayTime(alarmHours, alarmMin, alarmSec);
-                    }
-                    else
+                    } else
                         displayTime(hours, minutes, seconds);
+
+                    // checks for alarm
+                    if (hours == alarmHours && minutes == alarmMin && seconds == alarmSec) {
+                        soundAlarm = true;
+                    }
+                    if (soundAlarm) {
+                        Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+                        Ringtone r = RingtoneManager.getRingtone(getApplicationContext(), notification);
+                        r.play();
+                    }
+
                 }
 
             }
-        },0,1000);
+        }, 0, 1000);
 
+
+        // checker for + button
         mBtAdd = findViewById(R.id.btnIncrease);
         mBtAdd.setOnLongClickListener(
-                new View.OnLongClickListener(){
+                new View.OnLongClickListener() {
                     public boolean onLongClick(View v) {
                         mAutoIncrement = true;
-                        repeatUpdateHandler.post( new RptUpdater() );
+                        repeatUpdateHandler.post(new RptUpdater());
                         return false;
                     }
                 }
         );
 
-        mBtAdd.setOnTouchListener( new View.OnTouchListener() {
+        mBtAdd.setOnTouchListener(new View.OnTouchListener() {
             public boolean onTouch(View v, MotionEvent event) {
-                if( (event.getAction()==MotionEvent.ACTION_UP || event.getAction()==MotionEvent.ACTION_CANCEL)
-                        && mAutoIncrement ){
+                if ((event.getAction() == MotionEvent.ACTION_UP || event.getAction() == MotionEvent.ACTION_CANCEL)
+                        && mAutoIncrement) {
                     mAutoIncrement = false;
                 }
                 return false;
             }
         });
 
+        // checker for ++ button
         mBtAddFast = findViewById(R.id.btn2Increase);
         mBtAddFast.setOnLongClickListener(
-                new View.OnLongClickListener(){
+                new View.OnLongClickListener() {
                     public boolean onLongClick(View v) {
                         mAutoIncrement = true;
-                        repeatUpdateHandler.post( new RptUpdaterFast() );
+                        repeatUpdateHandler.post(new RptUpdaterFast());
                         return false;
                     }
                 }
         );
 
-        mBtAddFast.setOnTouchListener( new View.OnTouchListener() {
+        mBtAddFast.setOnTouchListener(new View.OnTouchListener() {
             public boolean onTouch(View v, MotionEvent event) {
-                if( (event.getAction()==MotionEvent.ACTION_UP || event.getAction()==MotionEvent.ACTION_CANCEL)
-                        && mAutoIncrement ){
+                if ((event.getAction() == MotionEvent.ACTION_UP || event.getAction() == MotionEvent.ACTION_CANCEL)
+                        && mAutoIncrement) {
                     mAutoIncrement = false;
                 }
                 return false;
             }
         });
 
+        // checker for - button
         mBtDecrease = findViewById(R.id.btnDecrease);
         mBtDecrease.setOnLongClickListener(
-                new View.OnLongClickListener(){
+                new View.OnLongClickListener() {
                     public boolean onLongClick(View v) {
                         mAutoDecrement = true;
-                        repeatUpdateHandler.post( new RptUpdater() );
+                        repeatUpdateHandler.post(new RptUpdater());
                         return false;
                     }
                 }
         );
 
-        mBtDecrease.setOnTouchListener( new View.OnTouchListener() {
+        mBtDecrease.setOnTouchListener(new View.OnTouchListener() {
             public boolean onTouch(View v, MotionEvent event) {
-                if( (event.getAction()==MotionEvent.ACTION_UP || event.getAction()==MotionEvent.ACTION_CANCEL)
-                        && mAutoDecrement ){
+                if ((event.getAction() == MotionEvent.ACTION_UP || event.getAction() == MotionEvent.ACTION_CANCEL)
+                        && mAutoDecrement) {
                     mAutoDecrement = false;
                 }
                 return false;
             }
         });
 
+        // checker for -- button
         mBtDecreaseFast = findViewById(R.id.btn2Decrease);
         mBtDecreaseFast.setOnLongClickListener(
-                new View.OnLongClickListener(){
+                new View.OnLongClickListener() {
                     public boolean onLongClick(View v) {
                         mAutoDecrement = true;
-                        repeatUpdateHandler.post( new RptUpdaterFast() );
+                        repeatUpdateHandler.post(new RptUpdaterFast());
                         return false;
                     }
                 }
         );
 
-        mBtDecreaseFast.setOnTouchListener( new View.OnTouchListener() {
+        mBtDecreaseFast.setOnTouchListener(new View.OnTouchListener() {
             public boolean onTouch(View v, MotionEvent event) {
-                if( (event.getAction()==MotionEvent.ACTION_UP || event.getAction()==MotionEvent.ACTION_CANCEL)
-                        && mAutoDecrement ){
+                if ((event.getAction() == MotionEvent.ACTION_UP || event.getAction() == MotionEvent.ACTION_CANCEL)
+                        && mAutoDecrement) {
                     mAutoDecrement = false;
                 }
                 return false;
             }
         });
 
+        // checker for stopAlarm button
+        mBtStopAlarm = findViewById(R.id.btnStopAlarm);
+        mBtStopAlarm.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                    mBtStopAlarm.setBackgroundResource(R.drawable.btn_stop_alarm_inactive);
+                    if (soundAlarm) {
+                        soundAlarm = false;
+                    }
+                }
+                if (event.getAction() == MotionEvent.ACTION_UP) {
+                    mBtStopAlarm.setBackgroundResource(R.drawable.btn_stop_alarm_active);
+                }
+                return false;
+            }
 
+        });
 
     }
-        // Changes what buttons are active and stops timer
-    public void btnTimeSetOnClickListener(){
+
+    // Changes what buttons are active and stops timer
+    public void btnTimeSetOnClickListener() {
         mBtTime = findViewById(R.id.btnTime);
         mBtTime.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 btnTimeIsActive();
-                if(alarmActive)
+                if (alarmActive)
                     btnAlarmIsActive();
                 if (snoozeActive)
                     btnSnoozeIsActive();
@@ -180,7 +225,7 @@ public class vk5AlarmHarjActivity extends AppCompatActivity {
     }
 
     // Changes what buttons are active and sets alarm
-    public void btnAlarmSetOnClickListener(){
+    public void btnAlarmSetOnClickListener() {
         mBtAlarm = findViewById(R.id.btnAlarm);
         mBtAlarm.setOnClickListener(new OnClickListener() {
             @Override
@@ -191,8 +236,6 @@ public class vk5AlarmHarjActivity extends AppCompatActivity {
                 if (snoozeActive)
                     btnSnoozeIsActive();
 
-                    // to show alarm time
-
             }
         });
     }
@@ -200,132 +243,128 @@ public class vk5AlarmHarjActivity extends AppCompatActivity {
 
     class RptUpdater implements Runnable {
         public void run() {
-            if( mAutoIncrement ){
+            if (mAutoIncrement) {
                 int[] x;
-               if (alarmActive) {
-                   x = increment(alarmHours,alarmMin,alarmSec);
-                   alarmHours = x[0];
+                if (alarmActive) {
+                    x = increment(alarmHours, alarmMin, alarmSec);
+                    alarmHours = x[0];
                     alarmMin = x[1];
                     alarmSec = x[2];
-                   displayTime(alarmHours,alarmMin, alarmSec);
-               } else{
-                   x = increment(hours,minutes,seconds);
-                   hours = x[0];
-                   minutes = x[1];
-                   seconds = x[2];
-                   displayTime(hours,minutes, seconds);
-               }
-                repeatUpdateHandler.postDelayed( new RptUpdater(), REP_DELAY );
-            } else if( mAutoDecrement ){
-                int[] y;
-                if (alarmActive) {
-                    y = decrement(alarmHours,alarmMin,alarmSec);
-                    alarmHours = y[0];
-                    alarmMin = y[1];
-                    alarmSec = y[2];
-                    displayTime(alarmHours,alarmMin, alarmSec);
-                } else{
-                    y = decrement(hours,minutes,seconds);
-                    hours = y[0];
-                    minutes = y[1];
-                    seconds = y[2];
-                    displayTime(hours,minutes, seconds);
+                    displayTime(alarmHours, alarmMin, alarmSec);
+                } else {
+                    x = increment(hours, minutes, seconds);
+                    hours = x[0];
+                    minutes = x[1];
+                    seconds = x[2];
+                    displayTime(hours, minutes, seconds);
                 }
-                repeatUpdateHandler.postDelayed( new RptUpdater(), REP_DELAY );
-            }
-        }
-    }
-    class RptUpdaterFast implements Runnable {
-        public void run() {
-            if( mAutoIncrement ){
-                int[] x;
-               if (alarmActive) {
-                   x = increment(alarmHours, alarmMin, alarmSec);
-                   alarmHours = x[0];
-                   alarmMin = x[1];
-                   alarmSec = x[2];
-                   displayTime(alarmHours,alarmMin, alarmSec);
-               }
-               else {
-                   x = increment(hours,minutes,seconds);
-                   hours = x[0];
-                   minutes = x[1];
-                   seconds = x[2];
-                   displayTime(hours,minutes, seconds);
-               }
-                repeatUpdateHandler.postDelayed( new RptUpdaterFast(), REP_DELAY_FAST );
-            } else if( mAutoDecrement ){
+                repeatUpdateHandler.postDelayed(new RptUpdater(), REP_DELAY);
+            } else if (mAutoDecrement) {
                 int[] y;
                 if (alarmActive) {
                     y = decrement(alarmHours, alarmMin, alarmSec);
                     alarmHours = y[0];
                     alarmMin = y[1];
                     alarmSec = y[2];
-                    displayTime(alarmHours,alarmMin,alarmSec);
-                }
-                else{
-                    y = decrement(hours,minutes,seconds);
+                    displayTime(alarmHours, alarmMin, alarmSec);
+                } else {
+                    y = decrement(hours, minutes, seconds);
                     hours = y[0];
                     minutes = y[1];
                     seconds = y[2];
-                    displayTime(hours,minutes, seconds);
+                    displayTime(hours, minutes, seconds);
                 }
-                repeatUpdateHandler.postDelayed( new RptUpdaterFast(), REP_DELAY_FAST );
+                repeatUpdateHandler.postDelayed(new RptUpdater(), REP_DELAY);
             }
         }
     }
 
+    class RptUpdaterFast implements Runnable {
+        public void run() {
+            if (mAutoIncrement) {
+                int[] x;
+                if (alarmActive) {
+                    x = increment(alarmHours, alarmMin, alarmSec);
+                    alarmHours = x[0];
+                    alarmMin = x[1];
+                    alarmSec = x[2];
+                    displayTime(alarmHours, alarmMin, alarmSec);
+                } else {
+                    x = increment(hours, minutes, seconds);
+                    hours = x[0];
+                    minutes = x[1];
+                    seconds = x[2];
+                    displayTime(hours, minutes, seconds);
+                }
+                repeatUpdateHandler.postDelayed(new RptUpdaterFast(), REP_DELAY_FAST);
+            } else if (mAutoDecrement) {
+                int[] y;
+                if (alarmActive) {
+                    y = decrement(alarmHours, alarmMin, alarmSec);
+                    alarmHours = y[0];
+                    alarmMin = y[1];
+                    alarmSec = y[2];
+                    displayTime(alarmHours, alarmMin, alarmSec);
+                } else {
+                    y = decrement(hours, minutes, seconds);
+                    hours = y[0];
+                    minutes = y[1];
+                    seconds = y[2];
+                    displayTime(hours, minutes, seconds);
+                }
+                repeatUpdateHandler.postDelayed(new RptUpdaterFast(), REP_DELAY_FAST);
+            }
+        }
+    }
 
-
-
-
-    public int[] increment(int h,int m, int s){
+    public int[] increment(int h, int m, int s) {
 
         s = s + 1;
         if (s >= 60) {
             m = m + 1;
             s = 0;
         }
-        if (m >= 60){
+        if (m >= 60) {
             h = h + 1;
             m = 0;
         }
-        if (h >= 24){
+        if (h >= 24) {
             h = 0;
         }
 
         int[] time;
-        time = new int [3];
+        time = new int[3];
         time[0] = h;
         time[1] = m;
         time[2] = s;
         return (time);
     }
 
-    public int[] decrement(int h, int m, int s){
+    public int[] decrement(int h, int m, int s) {
 
         s = s - 1;
         if (s <= 0) {
             m = m - 1;
             s = 60;
         }
-        if (m < 0){
+        if (m < 0) {
             h = h - 1;
             m = 59;
         }
-        if (h < 0){
+        if (h < 0) {
             h = 23;
         }
 
         int[] time;
-        time = new int [3];
+        time = new int[3];
         time[0] = h;
         time[1] = m;
         time[2] = s;
 
         return (time);
     }
-    public void displayTime (int h, int m, int s){
+
+    public void displayTime(int h, int m, int s) {
 
         mTxtSeconds = findViewById(R.id.txtSeconds);
         mTxtSeconds.setText("" + s);
@@ -335,32 +374,31 @@ public class vk5AlarmHarjActivity extends AppCompatActivity {
         mTxtHours.setText("" + h);
     }
 
-    public void btnTimeIsActive(){
+    public void btnTimeIsActive() {
         if (timeActive == true) {
             timeActive = false;
             mBtTime.setBackgroundResource(R.drawable.btn_time_inactive);
-        }
-        else {
+        } else {
             timeActive = true;
             mBtTime.setBackgroundResource(R.drawable.btn_time_active);
         }
     }
-    public void btnAlarmIsActive(){
-        if (alarmActive){
+
+    public void btnAlarmIsActive() {
+        if (alarmActive) {
             alarmActive = false;
             mBtAlarm.setBackgroundResource(R.drawable.btn_alarm_inactive);
-        }
-        else {
+        } else {
             alarmActive = true;
             mBtAlarm.setBackgroundResource(R.drawable.btn_alarm_active);
         }
     }
-    public void btnSnoozeIsActive(){
-        if (snoozeActive){
+
+    public void btnSnoozeIsActive() {
+        if (snoozeActive) {
             snoozeActive = false;
             mBtSnooze.setBackgroundResource(R.drawable.btn_alarm_inactive);
-        }
-        else {
+        } else {
             snoozeActive = true;
             mBtSnooze.setBackgroundResource(R.drawable.btn_snooze_active);
         }
