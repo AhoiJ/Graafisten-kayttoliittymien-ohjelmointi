@@ -9,7 +9,7 @@
     <string name="Status_txt">Status</string>
     <string name="Suurenna_button">Suurenna</string>
     <string name="Pienenna_button">Pienenna</string>
-    <string name="Zoom_txt">ZOOM = </string>
+    <string name="Zoom_txt">Zoom</string>
 
 
     <string name="Vk5_teht">T2 Alarm</string>
@@ -21,14 +21,17 @@
     <string name="btn_2Increase">++</string>
     <string name="btn_Decrease">-</string>
     <string name="btn_2Decrease">--</string>
-
-    <string name="Vk4_teht">T3</string>
-    <string name="plus_10min">10+</string>
-    <string name="minus_10min">10-</string>
-    <string name="value_reset">Reset</string>
-    <string name="value_base">0</string>
     <string name="time_hours">HH</string>
     <string name="time_minutes">MM</string>
     <string name="time_seconds">SS</string>
+
+    <string name="Vk4_teht">T3 Radio</string>
+    <string name="txt_Frequenzy">Mhz</string>
+    <string name="txt_FreqNum">0</string>
+    <string name="radio_CH1">CH 1</string>
+    <string name="radio_CH2">CH 2</string>
+    <string name="radio_CH3">CH 3</string>
+    <string name="radio_Off">OFF</string>
+
 
 </resources>
