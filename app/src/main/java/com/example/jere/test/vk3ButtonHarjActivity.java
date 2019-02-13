@@ -9,42 +9,73 @@ import android.view.View.OnClickListener;
 
 public class vk3ButtonHarjActivity extends AppCompatActivity {
 
-    Button btnRed;
-    Button btnGreen;
-    TextView btnSwing;
+    private Button mBtStart;
+    private Button mBtStop;
+    private Button mBtSuurenna;
+    private Button mBtPienenna;
+
+    private TextView mTxTStatus;
+    private TextView mTxTZoom;
+
+    int zoom = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_vk3button);
 
-        btnGreenOnClickListener();
-        btnRedOnClickListener();
+        mTxTStatus = findViewById(R.id.txtStatus);
 
+        mBtStart = findViewById(R.id.btnStarted);
+        mBtStartSetOnClickListener();
+
+        mBtStop = findViewById(R.id.btnStopped);
+        mBtStopSetOnClickListener();
+
+        mBtSuurenna = findViewById(R.id.btnSuurenna);
+        mBtSuurennaSetOnClickListener();
+
+        mBtPienenna = findViewById(R.id.btnPienenna);
+        mBtPienennaSetOnClickListener();
+
+        mTxTZoom = findViewById(R.id.txtZoom);
     }
-    public void btnGreenOnClickListener(){
-        btnGreen = findViewById(R.id.btnGreen);
 
-        btnGreen.setOnClickListener(new OnClickListener(){
+    public void mBtStartSetOnClickListener () {
+        mBtStart.setOnClickListener(new OnClickListener() {
             @Override
-            public void onClick(View view) {
-                btnSwing = findViewById(R.id.btnReactText);
-                btnSwing.setText("Vihreä");
-                btnSwing.setBackgroundColor(0xFF00FF00);
+            public void onClick(View v) {
+                mTxTStatus.setText(R.string.Started_txt);
             }
         });
 
+    }
+    public void mBtStopSetOnClickListener(){
+        mBtStop.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mTxTStatus.setText(R.string.Stopped_txt);
+            }
+        });
 
     }
-    public void btnRedOnClickListener(){
-        btnRed = findViewById(R.id.btnRed);
 
-        btnRed.setOnClickListener(new OnClickListener() {
+    public void mBtSuurennaSetOnClickListener(){
+        mBtSuurenna.setOnClickListener(new OnClickListener() {
             @Override
-            public void onClick(View view) {
-                btnSwing = findViewById(R.id.btnReactText);
-                btnSwing.setText("Punainen");
-                btnSwing.setBackgroundColor(0xFFFF0000);
+            public void onClick(View v) {
+                zoom++;
+                mTxTZoom.setText("ZOOM = " + zoom);
+            }
+        });
+    }
+
+    public void mBtPienennaSetOnClickListener(){
+        mBtPienenna.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                zoom--;
+                mTxTZoom.setText("ZOOM = " + zoom);
             }
         });
     }

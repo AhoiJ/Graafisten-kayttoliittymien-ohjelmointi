@@ -24,7 +24,7 @@ public class MainActivity extends AppCompatActivity {
         mbtVk5TehtOnCLickListener();
 
     }
-
+    // Teht 1, Button
     public void mBtVk3TehtOnClickListener() {
         mBtVkTeht3 = findViewById(R.id.btnVkT3);
         mBtVkTeht3.setOnClickListener(new OnClickListener() {
@@ -35,16 +35,7 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    public void mBtVk4TehtOnClickListener(){
-        mBtVkTeht4 = findViewById(R.id.btnVkT4);
-        mBtVkTeht4.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                launchVkTeht4();
-            }
-        });
-    }
-
+    // Teht 2, Heratuskello
     public void mbtVk5TehtOnCLickListener(){
         mBtVkTeht5 = findViewById(R.id.btnVkT5);
         mBtVkTeht5.setOnClickListener(new OnClickListener() {
@@ -55,6 +46,19 @@ public class MainActivity extends AppCompatActivity {
         });
 
     }
+
+    // Teht 3
+    public void mBtVk4TehtOnClickListener(){
+        mBtVkTeht4 = findViewById(R.id.btnVkT4);
+        mBtVkTeht4.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                launchVkTeht4();
+            }
+        });
+    }
+
+
 
 
     private void launchVkTeht3() {

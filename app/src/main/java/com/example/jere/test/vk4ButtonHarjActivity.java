@@ -22,7 +22,11 @@ public class vk4ButtonHarjActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_vk4button);
+/*
 
+            TÄMÄ ON VIIKKOTEHTÄVÄ 3, FM RADIO!!!!!
+
+ */
         mBtPlusOneOnClickListener();
         mBtPlusTenOnClickListener();
         mBtMinusOneOnClickListener();
