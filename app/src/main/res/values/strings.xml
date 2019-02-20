@@ -26,12 +26,14 @@
     <string name="time_seconds">SS</string>
 
     <string name="Vk4_teht">T3 Radio</string>
-    <string name="txt_Frequenzy">Mhz</string>
+    <string name="txt_Frequenzy">90.0 Mhz</string>
     <string name="txt_FreqNum">0</string>
     <string name="radio_CH1">CH 1</string>
     <string name="radio_CH2">CH 2</string>
     <string name="radio_CH3">CH 3</string>
     <string name="radio_Off">OFF</string>
-
+    <string name="radioLowFreq">87 Mhz</string>
+    <string name="radioMidFreq">90 Mhz</string>
+    <string name="radioHighFreq">108 Mhz</string>
 
 </resources>

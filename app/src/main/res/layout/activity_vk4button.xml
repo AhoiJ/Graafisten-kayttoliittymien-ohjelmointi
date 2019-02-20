@@ -21,13 +21,13 @@
         android:layout_marginBottom="8dp"
         android:background="@drawable/custom_image_button"
         android:padding="20dp"
-        android:src="@drawable/Arrow"
+        android:src="@drawable/arrow"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.641"
+        app:layout_constraintHorizontal_bias="0.629"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.217" />
+        app:layout_constraintVertical_bias="0.307" />
 
     <ImageButton
         android:id="@+id/iBtnArrowLeft"
@@ -43,13 +43,36 @@
         android:background="@drawable/custom_image_button"
         android:padding="20dp"
         android:scaleX="-1"
-        android:src="@drawable/Arrow"
+        android:src="@drawable/arrow"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.264"
+        app:layout_constraintHorizontal_bias="0.37"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.217" />
+        app:layout_constraintVertical_bias="0.307" />
+
+    <ImageButton
+        android:id="@+id/iBtnLongArrowRight"
+        android:layout_width="84dp"
+        android:layout_height="46dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/sBRadioSlider"
+        app:srcCompat="@drawable/arrow_long" />
+
+    <ImageButton
+        android:id="@+id/iBtnLongArrowLeft"
+        android:layout_width="84dp"
+        android:layout_height="46dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="20dp"
+        android:scaleX="-1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/sBRadioSlider"
+        app:srcCompat="@drawable/arrow_long" />
 
     <TextView
         android:id="@+id/txtFrequenzy"
@@ -71,26 +94,6 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.077" />
 
-    <TextView
-        android:id="@+id/txtFreqNum"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="244dp"
-        android:layout_marginLeft="244dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginBottom="8dp"
-        android:text="@string/txt_FreqNum"
-        android:textSize="25sp"
-        android:background="@color/colorOrangeDark"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/txtFrequenzy"
-        app:layout_constraintHorizontal_bias="0.846"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.077" />
-
     <SeekBar
         android:id="@+id/sBRadioSlider"
         android:layout_width="0dp"
@@ -101,12 +104,13 @@
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginBottom="8dp"
+        android:max="210"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.152" />
+        app:layout_constraintVertical_bias="0.238" />
 
     <RadioGroup
         android:id="@+id/radioGroup"
@@ -156,6 +160,53 @@
             app:layout_constraintTop_toBottomOf="@+id/radioCH3"
             app:layout_constraintVertical_bias="0.0" />
     </RadioGroup>
+
+    <TextView
+        android:id="@+id/txtLowFreq"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="124dp"
+        android:layout_marginBottom="8dp"
+        android:text="@string/radioLowFreq"
+        app:layout_constraintBottom_toTopOf="@+id/sBRadioSlider"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <TextView
+        android:id="@+id/txtMidFreq"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="128dp"
+        android:layout_marginLeft="128dp"
+        android:layout_marginTop="124dp"
+        android:layout_marginBottom="8dp"
+        android:text="@string/radioMidFreq"
+        app:layout_constraintBottom_toTopOf="@+id/sBRadioSlider"
+        app:layout_constraintStart_toEndOf="@+id/txtLowFreq"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <TextView
+        android:id="@+id/txtHighFreq"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="100dp"
+        android:layout_marginLeft="100dp"
+        android:layout_marginTop="124dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginBottom="8dp"
+        android:text="@string/radioHighFreq"
+        app:layout_constraintBottom_toTopOf="@+id/sBRadioSlider"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toEndOf="@+id/txtMidFreq"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
+
 
 
 
